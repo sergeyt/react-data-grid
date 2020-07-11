@@ -53,6 +53,7 @@ export interface InteractionMasksProps<R, SR> extends SharedCanvasProps<R, SR> {
   scrollTop: number;
   eventBus: EventBus;
   scrollToCell: (cell: Position) => void;
+  getCellValue?: (row: R, col: CalculatedColumn<R, SR>) => unknown;
 }
 
 export default function InteractionMasks<R, SR>({
@@ -72,7 +73,8 @@ export default function InteractionMasks<R, SR>({
   onSelectedCellChange,
   onCheckCellIsEditable,
   onRowsUpdate,
-  scrollToCell
+  scrollToCell,
+  getCellValue
 }: InteractionMasksProps<R, SR>) {
   const [selectedPosition, setSelectedPosition] = useState<SelectCellState | EditCellState>(() => {
     if (enableCellAutoFocus && document.activeElement === document.body && columns.length > 0 && rows.length > 0) {
@@ -381,6 +383,7 @@ export default function InteractionMasks<R, SR>({
             column={columns[selectedPosition.idx]}
             scrollLeft={scrollLeft}
             scrollTop={scrollTop}
+            getValue={getCellValue}
             {...getEditorPosition()}
           />
         </EditorPortal>

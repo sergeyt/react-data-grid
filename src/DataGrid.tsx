@@ -141,6 +141,8 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> {
   /** The node where the editor portal should mount. */
   editorPortalTarget?: Element;
   rowClass?: (row: R) => string | undefined;
+  /** To support getting nested fields */
+  getCellValue?: (row: R, column: CalculatedColumn<R, SR>) => unknown;
 }
 
 /**
@@ -190,7 +192,8 @@ function DataGrid<R, K extends keyof R, SR>({
   cellNavigationMode = CellNavigationMode.NONE,
   // Miscellaneous
   editorPortalTarget = document.body,
-  rowClass
+  rowClass,
+  getCellValue
 }: DataGridProps<R, K, SR>, ref: React.Ref<DataGridHandle>) {
   /**
    * refs
@@ -460,6 +463,7 @@ function DataGrid<R, K extends keyof R, SR>({
               onCheckCellIsEditable={onCheckCellIsEditable}
               onRowsUpdate={handleRowsUpdate}
               onSelectedCellChange={onSelectedCellChange}
+              getCellValue={getCellValue}
             />
           )}
           <div style={{ height: Math.max(rows.length * rowHeight, clientHeight) }} />

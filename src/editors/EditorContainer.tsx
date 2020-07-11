@@ -22,6 +22,7 @@ export interface EditorContainerProps<R, SR> extends SharedInteractionMasksProps
   firstEditorKeyPress: string | null;
   top: number;
   left: number;
+  getCellValue?: (row: R, col: CalculatedColumn<R, SR>) => unknown;
 }
 
 export default function EditorContainer<R, SR>({
@@ -35,7 +36,8 @@ export default function EditorContainer<R, SR>({
   onCommitCancel,
   scrollLeft,
   scrollTop,
-  firstEditorKeyPress: key
+  firstEditorKeyPress: key,
+  getCellValue = (r, c) => r[c.key as keyof R]
 }: EditorContainerProps<R, SR>) {
   const editorRef = useRef<Editor>(null);
   const changeCommitted = useRef(false);
@@ -82,7 +84,7 @@ export default function EditorContainer<R, SR>({
   });
 
   function getInitialValue() {
-    const value = row[column.key as keyof R];
+    const value = getCellValue(row, column);
     if (key === 'Delete' || key === 'Backspace') {
       return '';
     }
