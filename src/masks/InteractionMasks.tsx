@@ -383,7 +383,7 @@ export default function InteractionMasks<R, SR>({
             column={columns[selectedPosition.idx]}
             scrollLeft={scrollLeft}
             scrollTop={scrollTop}
-            getValue={getCellValue}
+            getCellValue={getCellValue}
             {...getEditorPosition()}
           />
         </EditorPortal>
