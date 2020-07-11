@@ -11,6 +11,7 @@ export interface InteractionMasksProps<R, SR> extends SharedCanvasProps<R, SR> {
     scrollTop: number;
     eventBus: EventBus;
     scrollToCell: (cell: Position) => void;
+    getCellValue?: (row: R, col: CalculatedColumn<R, SR>) => unknown;
 }
-export default function InteractionMasks<R, SR>({ columns, rows, rowHeight, eventBus, enableCellAutoFocus, enableCellCopyPaste, enableCellDragAndDrop, editorPortalTarget, cellNavigationMode, gridRef, totalHeaderHeight, scrollLeft, scrollTop, onSelectedCellChange, onCheckCellIsEditable, onRowsUpdate, scrollToCell }: InteractionMasksProps<R, SR>): JSX.Element;
+export default function InteractionMasks<R, SR>({ columns, rows, rowHeight, eventBus, enableCellAutoFocus, enableCellCopyPaste, enableCellDragAndDrop, editorPortalTarget, cellNavigationMode, gridRef, totalHeaderHeight, scrollLeft, scrollTop, onSelectedCellChange, onCheckCellIsEditable, onRowsUpdate, scrollToCell, getCellValue }: InteractionMasksProps<R, SR>): JSX.Element;
 export {};

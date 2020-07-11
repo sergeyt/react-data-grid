@@ -10,6 +10,7 @@ export interface EditorContainerProps<R, SR> extends SharedInteractionMasksProps
     firstEditorKeyPress: string | null;
     top: number;
     left: number;
+    getCellValue?: (row: R, col: CalculatedColumn<R, SR>) => unknown;
 }
-export default function EditorContainer<R, SR>({ rowIdx, column, row, rowHeight, left, top, onCommit, onCommitCancel, scrollLeft, scrollTop, firstEditorKeyPress: key }: EditorContainerProps<R, SR>): JSX.Element;
+export default function EditorContainer<R, SR>({ rowIdx, column, row, rowHeight, left, top, onCommit, onCommitCancel, scrollLeft, scrollTop, firstEditorKeyPress: key, getCellValue }: EditorContainerProps<R, SR>): JSX.Element;
 export {};

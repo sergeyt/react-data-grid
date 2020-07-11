@@ -95,6 +95,8 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> {
     /** The node where the editor portal should mount. */
     editorPortalTarget?: Element;
     rowClass?: (row: R) => string | undefined;
+    /** To support getting nested fields */
+    getCellValue?: (row: R, column: CalculatedColumn<R, SR>) => unknown;
 }
 declare const _default: <R, K extends keyof R, SR = unknown>(props: DataGridProps<R, K, SR> & {
     ref?: ((instance: DataGridHandle | null) => void) | React.RefObject<DataGridHandle> | null | undefined;
