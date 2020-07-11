@@ -74,7 +74,7 @@ export default function InteractionMasks<R, SR>({
   onCheckCellIsEditable,
   onRowsUpdate,
   scrollToCell,
-  getCellValue
+  getCellValue = (r, c) => r[c.key as keyof R]
 }: InteractionMasksProps<R, SR>) {
   const [selectedPosition, setSelectedPosition] = useState<SelectCellState | EditCellState>(() => {
     if (enableCellAutoFocus && document.activeElement === document.body && columns.length > 0 && rows.length > 0) {
@@ -228,7 +228,7 @@ export default function InteractionMasks<R, SR>({
 
   function handleCopy(): void {
     const { idx, rowIdx } = selectedPosition;
-    const value = rows[rowIdx][columns[idx].key as keyof R];
+    const value = getCellValue(rows[rowIdx], columns[idx]);
     setCopiedPosition({ idx, rowIdx, value });
   }
 
@@ -297,7 +297,7 @@ export default function InteractionMasks<R, SR>({
     const { rowIdx, overRowIdx } = draggedPosition;
     const column = columns[draggedPosition.idx];
     const cellKey = column.key;
-    const value = rows[rowIdx][cellKey as keyof R];
+    const value = getCellValue(rows[rowIdx], column);
 
     onRowsUpdate({
       cellKey,
