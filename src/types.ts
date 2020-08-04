@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { KeyboardEvent } from 'react';
 import { UpdateActions } from './enums';
-import EventBus from '../EventBus';
+import EventBus from './EventBus';
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -21,6 +21,9 @@ export interface Column<TRow, TSummaryRow = unknown> {
   summaryCellClass?: string | ((row: TSummaryRow) => string);
   /** Formatter to be used to render the cell content */
   formatter?: React.ComponentType<FormatterProps<TRow, TSummaryRow>>;
+  formatterOptions?: {
+    focusable?: boolean;
+  };
   /** Formatter to be used to render the summary cell content */
   summaryFormatter?: React.ComponentType<SummaryFormatterProps<TSummaryRow, TRow>>;
   /** Enables cell editing. If set and no editor property specified, then a textinput will be used as the cell editor */
@@ -56,14 +59,6 @@ export interface Position {
   rowIdx: number;
 }
 
-export interface Dimension {
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-  zIndex: number;
-}
-
 export interface Editor<TValue = never> {
   getInputNode: () => Element | Text | undefined | null;
   getValue: () => TValue;
@@ -77,6 +72,7 @@ export interface FormatterProps<TRow = any, TSummaryRow = any> {
   rowIdx: number;
   column: CalculatedColumn<TRow, TSummaryRow>;
   row: TRow;
+  isCellSelected: boolean;
   isRowSelected: boolean;
   onRowSelectionChange: (checked: boolean, isShiftClick: boolean) => void;
 }
@@ -103,13 +99,43 @@ export interface HeaderRendererProps<TRow, TSummaryRow = unknown> {
   onAllRowsSelectionChange: (checked: boolean) => void;
 }
 
+export interface SharedEditorContainerProps {
+  editorPortalTarget: Element;
+  firstEditorKeyPress: string | null;
+  scrollLeft: number;
+  scrollTop: number;
+  rowHeight: number;
+  onCommit: (e: CommitEvent) => void;
+  onCommitCancel: () => void;
+}
+
+interface SelectedCellPropsBase {
+  idx: number;
+  onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+}
+
+interface SelectedCellPropsEdit extends SelectedCellPropsBase {
+  mode: 'EDIT';
+  editorContainerProps: SharedEditorContainerProps;
+}
+
+interface SelectedCellPropsSelect extends SelectedCellPropsBase {
+  mode: 'SELECT';
+  dragHandleProps?: Pick<React.HTMLAttributes<HTMLDivElement>, 'onMouseDown' | 'onDoubleClick'>;
+}
+
+export type SelectedCellProps = SelectedCellPropsEdit | SelectedCellPropsSelect;
+
 export interface CellRendererProps<TRow, TSummaryRow = unknown> extends Omit<React.HTMLAttributes<HTMLDivElement>, 'style' | 'children'> {
   rowIdx: number;
   column: CalculatedColumn<TRow, TSummaryRow>;
   lastFrozenColumnIndex: number;
   row: TRow;
   isRowSelected: boolean;
+  isCopied: boolean;
+  isDraggedOver: boolean;
   eventBus: EventBus;
+  selectedCellProps?: SelectedCellProps;
   onRowClick?: (rowIdx: number, row: TRow, column: CalculatedColumn<TRow, TSummaryRow>) => void;
 }
 
@@ -119,11 +145,15 @@ export interface RowRendererProps<TRow, TSummaryRow = unknown> extends Omit<Reac
   cellRenderer?: React.ComponentType<CellRendererProps<TRow, TSummaryRow>>;
   rowIdx: number;
   lastFrozenColumnIndex: number;
+  copiedCellIdx?: number;
+  draggedOverCellIdx?: number;
   isRowSelected: boolean;
   eventBus: EventBus;
+  top: number;
+  selectedCellProps?: SelectedCellProps;
   onRowClick?: (rowIdx: number, row: TRow, column: CalculatedColumn<TRow, TSummaryRow>) => void;
   rowClass?: (row: TRow) => string | undefined;
-  top: number;
+  setDraggedOverRowIdx?: (overRowIdx: number) => void;
 }
 
 export interface FilterRendererProps<TRow, TFilterValue = unknown, TSummaryRow = unknown> {

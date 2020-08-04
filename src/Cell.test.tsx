@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Cell from './Cell';
 import helpers, { Row } from './test/GridPropHelpers';
 import { SimpleCellFormatter } from './formatters';
-import { CalculatedColumn, CellRendererProps, FormatterProps } from './common/types';
+import { CalculatedColumn, CellRendererProps, FormatterProps } from './types';
 import EventBus from './EventBus';
 
 const defaultColumn: CalculatedColumn<Row> = {
@@ -22,7 +22,9 @@ const testProps: CellRendererProps<Row> = {
   lastFrozenColumnIndex: -1,
   row: { id: 1, description: 'Wicklow' },
   isRowSelected: false,
-  eventBus: new EventBus()
+  eventBus: new EventBus(),
+  isCopied: false,
+  isDraggedOver: false
 };
 
 const renderComponent = (extraProps?: PropsWithChildren<Partial<CellRendererProps<Row>>>) => {
@@ -60,7 +62,9 @@ describe('Cell', () => {
       lastFrozenColumnIndex: -1,
       row: helpers.rows[11],
       isRowSelected: false,
-      eventBus: new EventBus()
+      eventBus: new EventBus(),
+      isCopied: false,
+      isDraggedOver: false
     };
 
     it('passes classname property', () => {
