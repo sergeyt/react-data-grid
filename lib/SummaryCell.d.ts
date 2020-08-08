@@ -1,4 +1,4 @@
-import { CellRendererProps } from './common/types';
+import { CellRendererProps } from './types';
 declare type SharedCellRendererProps<R, SR> = Pick<CellRendererProps<R, SR>, 'lastFrozenColumnIndex' | 'column'>;
 interface SummaryCellProps<R, SR> extends SharedCellRendererProps<R, SR> {
     row: SR;

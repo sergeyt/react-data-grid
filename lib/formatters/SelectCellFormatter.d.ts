@@ -1,6 +1,9 @@
-export interface SelectCellFormatterProps {
+import React from 'react';
+declare type SharedInputProps = Pick<React.InputHTMLAttributes<HTMLInputElement>, 'disabled' | 'tabIndex' | 'aria-label' | 'aria-labelledby'>;
+export interface SelectCellFormatterProps extends SharedInputProps {
+    isCellSelected?: boolean;
     value: boolean;
-    disabled?: boolean;
     onChange: (value: boolean, isShiftClick: boolean) => void;
 }
-export declare function SelectCellFormatter({ value, disabled, onChange }: SelectCellFormatterProps): JSX.Element;
+export declare function SelectCellFormatter({ value, tabIndex, isCellSelected, disabled, onChange, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledBy }: SelectCellFormatterProps): JSX.Element;
+export {};

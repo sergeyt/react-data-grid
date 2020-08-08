@@ -1,4 +1,4 @@
-import { CalculatedColumn } from './common/types';
+import { CalculatedColumn } from './types';
 import { DataGridProps } from './DataGrid';
 declare type SharedDataGridProps<R, SR> = Pick<DataGridProps<R, never, SR>, 'filters' | 'onFiltersChange'>;
 export interface FilterRowProps<R, SR> extends SharedDataGridProps<R, SR> {

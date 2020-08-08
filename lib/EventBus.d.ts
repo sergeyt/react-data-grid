@@ -1,8 +1,7 @@
-import { Position, SelectRowEvent } from './common/types';
+import { Position, SelectRowEvent } from './types';
 interface EventMap {
-    SELECT_CELL: (position: Position, enableEditor?: boolean) => void;
+    SELECT_CELL: (position: Position, openEditor?: boolean) => void;
     SELECT_ROW: (event: SelectRowEvent) => void;
-    DRAG_ENTER: (overRowIdx: number) => void;
 }
 declare type EventName = keyof EventMap;
 export default class EventBus {

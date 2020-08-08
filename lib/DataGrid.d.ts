@@ -1,12 +1,13 @@
 import React from 'react';
-import { CalculatedColumn, CheckCellIsEditableEvent, Column, Filters, FormatterProps, Position, RowRendererProps, RowsUpdateEvent } from './common/types';
-import { CellNavigationMode, SortDirection } from './common/enums';
+import { CalculatedColumn, CheckCellIsEditableEvent, Column, Filters, FormatterProps, Position, RowRendererProps, RowsUpdateEvent } from './types';
+import { CellNavigationMode, SortDirection } from './enums';
 export interface DataGridHandle {
     scrollToColumn: (colIdx: number) => void;
     scrollToRow: (rowIdx: number) => void;
     selectCell: (position: Position, openEditor?: boolean) => void;
 }
-export interface DataGridProps<R, K extends keyof R, SR = unknown> {
+declare type SharedDivProps = Pick<React.HTMLAttributes<HTMLDivElement>, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>;
+export interface DataGridProps<R, K extends keyof R, SR = unknown> extends SharedDivProps {
     /**
      * Grid and data Props
      */
@@ -84,8 +85,6 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> {
      */
     /** Toggles whether filters row is displayed or not */
     enableFilters?: boolean;
-    /** Toggles whether cells should be autofocused */
-    enableCellAutoFocus?: boolean;
     enableCellCopyPaste?: boolean;
     enableCellDragAndDrop?: boolean;
     cellNavigationMode?: CellNavigationMode;

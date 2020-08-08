@@ -1,4 +1,4 @@
-import { Column, CalculatedColumn, FormatterProps } from '../common/types';
+import { Column, CalculatedColumn, FormatterProps } from '../types';
 interface Metrics<R, SR> {
     columns: readonly Column<R, SR>[];
     columnWidths: ReadonlyMap<string, number>;
