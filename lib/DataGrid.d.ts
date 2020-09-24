@@ -1,12 +1,13 @@
 import React from 'react';
-import { CalculatedColumn, CheckCellIsEditableEvent, Column, Filters, FormatterProps, Position, RowRendererProps, RowsUpdateEvent } from './types';
+import { CalculatedColumn, CheckCellIsEditableEvent, Column, Filters, Position, RowRendererProps, RowsUpdateEvent, Dictionary } from './types';
 import { CellNavigationMode, SortDirection } from './enums';
+declare type DefaultColumnOptions<R, SR> = Pick<Column<R, SR>, 'formatter' | 'minWidth' | 'resizable' | 'sortable'>;
 export interface DataGridHandle {
     scrollToColumn: (colIdx: number) => void;
     scrollToRow: (rowIdx: number) => void;
     selectCell: (position: Position, openEditor?: boolean) => void;
 }
-declare type SharedDivProps = Pick<React.HTMLAttributes<HTMLDivElement>, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>;
+declare type SharedDivProps = Pick<React.HTMLAttributes<HTMLDivElement>, 'aria-label' | 'aria-labelledby' | 'aria-describedby' | 'className' | 'style'>;
 export interface DataGridProps<R, K extends keyof R, SR = unknown> extends SharedDivProps {
     /**
      * Grid and data Props
@@ -31,15 +32,10 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> extends Share
      * 4. Update all cells under a given cell by double clicking the cell's fill handle.
      */
     onRowsUpdate?: <E extends RowsUpdateEvent>(event: E) => void;
+    onRowsChange?: (rows: R[]) => void;
     /**
      * Dimensions props
      */
-    /** The width of the grid in pixels */
-    width?: number;
-    /** The height of the grid in pixels */
-    height?: number;
-    /** Minimum column width in pixels */
-    minColumnWidth?: number;
     /** The height of each row in pixels */
     rowHeight?: number;
     /** The height of the header row in pixels */
@@ -61,10 +57,14 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> extends Share
     onSort?: (columnKey: string, direction: SortDirection) => void;
     filters?: Filters;
     onFiltersChange?: (filters: Filters) => void;
+    defaultColumnOptions?: DefaultColumnOptions<R, SR>;
+    groupBy?: readonly string[];
+    rowGrouper?: (rows: readonly R[], columnKey: string) => Dictionary<readonly R[]>;
+    expandedGroupIds?: ReadonlySet<unknown>;
+    onExpandedGroupIdsChange?: (expandedGroupIds: Set<unknown>) => void;
     /**
      * Custom renderers
      */
-    defaultFormatter?: React.ComponentType<FormatterProps<R, SR>>;
     rowRenderer?: React.ComponentType<RowRendererProps<R, SR>>;
     emptyRowsRenderer?: React.ComponentType;
     /**
@@ -97,7 +97,5 @@ export interface DataGridProps<R, K extends keyof R, SR = unknown> extends Share
     /** To support getting nested fields */
     getCellValue?: (row: R, column: CalculatedColumn<R, SR>) => unknown;
 }
-declare const _default: <R, K extends keyof R, SR = unknown>(props: DataGridProps<R, K, SR> & {
-    ref?: ((instance: DataGridHandle | null) => void) | React.RefObject<DataGridHandle> | null | undefined;
-}) => JSX.Element;
+declare const _default: <R, K extends keyof R, SR = unknown>(props: DataGridProps<R, K, SR> & React.RefAttributes<DataGridHandle>) => JSX.Element;
 export default _default;
