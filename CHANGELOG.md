@@ -3,6 +3,8 @@
 ## `alpha` to `canary`
 - **Added:**
   - **Props:**
+    - `className`
+    - `style`
     - `onSelectedCellChange`
       - ⚠️ This replaces the `onCellSelected` and `onCellDeSelected` props
     - `enableFilters`
@@ -14,24 +16,39 @@
     - `rows`
       - ⚠️ This replace the `rowGetter` and `rowsCount` props
     - `rowClass`
+    - `defaultColumnOptions`
+      - ⚠️ This replaces the `minColumnWidth` and `defaultFormatter` props
+    - `groupBy`
+    - `rowGrouper`
+      - More info in [#2106](https://github.com/adazzle/react-data-grid/pull/2106)
   - `column.cellClass(row)` function support:
     - `column = { ..., cellClass(row) { return string; } }`
   - `column.minWidth`
   - `column.maxWidth`
   - `column.headerCellClass`
+  - `column.editor2`
+  - `column.editorOptions`
+    - More info in [#2102](https://github.com/adazzle/react-data-grid/pull/2102)
+  - `column.groupFormatter`
+    - More info in [#2106](https://github.com/adazzle/react-data-grid/pull/2106)
   - `scrollToRow` method
     - ⚠️ This replaces the `scrollToRowIndex` prop
+  - Dark mode support
+    - Dark mode is automatically applied following user preference
+    - Light and dark modes can be forced by setting the `rdg-light` or `rdg-dark` class names.
 - **Removed:**
   - **Support:**
     - ⚠️ IE11
   - **Packages:**
     - ⚠️ `react-data-grid-addons`
   - **Props:**
+    - ⚠️ `width`
+    - ⚠️ `height`
     - ⚠️ `cellContentRenderer`
     - ⚠️ `contextMenu`
-      <!-- TODO: fill link to storybook -->
-      - Check the [Context Menu]() example
+      - Check the [Context Menu](https://adazzle.github.io/react-data-grid/canary/?path=/story/demos--context-menu) example
     - ⚠️ `enableCellSelect`
+    - ⚠️ `enableCellAutoFocus`
     - ⚠️ `getValidFilterValues`
     - ⚠️ `onCellCopyPaste`
     - ⚠️ `onSelectedCellRangeChange`
@@ -65,6 +82,7 @@
   - ⚠️ `column.getCellActions`
     - Check [#1845](https://github.com/adazzle/react-data-grid/pull/1845) on how to migrate
   - ⚠️ `column.getRowMetaData`
+  - ⚠️ `column.minColumnWidth`
   - ⚠️ `column.filterable`
   - ⚠️ `column.draggable`
   - ⚠️ `cellRangeSelection.{onStart,onUpdate,onEnd}`

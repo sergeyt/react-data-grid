@@ -1,22 +1,16 @@
-import { CellNavigationMode } from '../common/enums';
-import { CalculatedColumn, Position, Dimension } from '../common/types';
-interface GetSelectedDimensionsOpts<R, SR> {
-    selectedPosition: Position;
-    columns: readonly CalculatedColumn<R, SR>[];
-    rowHeight: number;
-    scrollLeft: number;
-}
-export declare function getSelectedDimensions<R, SR>({ selectedPosition: { idx, rowIdx }, columns, rowHeight, scrollLeft }: GetSelectedDimensionsOpts<R, SR>): Dimension;
+import { CellNavigationMode } from '../enums';
+import { CalculatedColumn, Position, GroupRow } from '../types';
 interface IsSelectedCellEditableOpts<R, SR> {
     selectedPosition: Position;
     columns: readonly CalculatedColumn<R, SR>[];
-    rows: readonly R[];
+    rows: readonly (R | GroupRow<R>)[];
     onCheckCellIsEditable?: (arg: {
         row: R;
         column: CalculatedColumn<R, SR>;
     } & Position) => boolean;
+    isGroupRow: (row: R | GroupRow<R>) => row is GroupRow<R>;
 }
-export declare function isSelectedCellEditable<R, SR>({ selectedPosition, columns, rows, onCheckCellIsEditable }: IsSelectedCellEditableOpts<R, SR>): boolean;
+export declare function isSelectedCellEditable<R, SR>({ selectedPosition, columns, rows, onCheckCellIsEditable, isGroupRow }: IsSelectedCellEditableOpts<R, SR>): boolean;
 interface GetNextSelectedCellPositionOpts<R, SR> {
     cellNavigationMode: CellNavigationMode;
     columns: readonly CalculatedColumn<R, SR>[];
@@ -29,6 +23,7 @@ interface CanExitGridOpts<R, SR> {
     columns: readonly CalculatedColumn<R, SR>[];
     rowsCount: number;
     selectedPosition: Position;
+    shiftKey: boolean;
 }
-export declare function canExitGrid<R, SR>(event: React.KeyboardEvent, { cellNavigationMode, columns, rowsCount, selectedPosition: { rowIdx, idx } }: CanExitGridOpts<R, SR>): boolean;
+export declare function canExitGrid<R, SR>({ cellNavigationMode, columns, rowsCount, selectedPosition: { rowIdx, idx }, shiftKey }: CanExitGridOpts<R, SR>): boolean;
 export {};

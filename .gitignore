@@ -1,6 +1,7 @@
 /coverage
 /node_modules
 /storybook-static
+.idea
 /.eslintcache
 /package-lock.json
 

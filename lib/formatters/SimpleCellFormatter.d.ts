@@ -1,2 +1,2 @@
-import { FormatterProps } from '../common/types';
+import { FormatterProps } from '../types';
 export declare function SimpleCellFormatter({ row, column }: FormatterProps): JSX.Element;

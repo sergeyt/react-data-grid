@@ -1,5 +1,5 @@
-import { CellRendererProps } from './common/types';
-declare type SharedCellRendererProps<R, SR> = Pick<CellRendererProps<R, SR>, 'lastFrozenColumnIndex' | 'column'>;
+import { CellRendererProps } from './types';
+declare type SharedCellRendererProps<R, SR> = Pick<CellRendererProps<R, SR>, 'column'>;
 interface SummaryCellProps<R, SR> extends SharedCellRendererProps<R, SR> {
     row: SR;
 }

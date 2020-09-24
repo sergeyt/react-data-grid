@@ -1,16 +1,10 @@
-import { CalculatedColumn, CommitEvent } from '../common/types';
-import { InteractionMasksProps } from '../masks/InteractionMasks';
-declare type SharedInteractionMasksProps<R, SR> = Pick<InteractionMasksProps<R, SR>, 'scrollLeft' | 'scrollTop' | 'rowHeight'>;
-export interface EditorContainerProps<R, SR> extends SharedInteractionMasksProps<R, SR> {
+import { CalculatedColumn, SharedEditorContainerProps } from '../types';
+export interface EditorContainerProps<R, SR> extends SharedEditorContainerProps {
     rowIdx: number;
     row: R;
     column: CalculatedColumn<R, SR>;
-    onCommit: (e: CommitEvent) => void;
-    onCommitCancel: () => void;
-    firstEditorKeyPress: string | null;
     top: number;
     left: number;
     getCellValue?: (row: R, col: CalculatedColumn<R, SR>) => unknown;
 }
 export default function EditorContainer<R, SR>({ rowIdx, column, row, rowHeight, left, top, onCommit, onCommitCancel, scrollLeft, scrollTop, firstEditorKeyPress: key, getCellValue }: EditorContainerProps<R, SR>): JSX.Element;
-export {};

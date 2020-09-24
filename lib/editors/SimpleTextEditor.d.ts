@@ -1,5 +1,5 @@
 import React from 'react';
-import { Editor, EditorProps } from '../common/types';
+import { Editor, EditorProps } from '../types';
 declare type Props = Pick<EditorProps<string>, 'value' | 'column' | 'onCommit'>;
 export default class SimpleTextEditor extends React.Component<Props> implements Editor<{
     [key: string]: string;
